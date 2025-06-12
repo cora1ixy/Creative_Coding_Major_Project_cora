@@ -24,15 +24,9 @@ The animation is entirely **interaction-based**:
 
 ### Visual Inspiration
 Inspired by:
-- ** [Complexity Explorables] (complexity-explorables.org) ** – A collection of interactive visual essays that explore complex systems through code.
+- **[Complexity Explorables](https://www.complexity-explorables.org)** – a collection of interactive visual essays that explore complex systems through code.
 - **Generative art** on [openprocessing.org](https://www.openprocessing.org/) – especially those involving mouse-trail and bounce effects.
-
 These references inspired my decision to let the mouse guide the scene composition and movement.
-
-A short technical explanation of how your individual code works to animate the image and any appropriate references.
-If you made a lot of changes to the group code, explain it here.
-If you use tools and technique from outside the course, explain why you used them and how they work.
-If you copy a technique from the Internet, explain how it works, why you used it, and where it came from.
 
 ### Technical Overview
 - Each circle is an instance of one of four custom classes.
