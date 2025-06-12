@@ -1,4 +1,12 @@
+/* Started with referring to the Week 9 Lecture of 
+responsive design example for the animation of the circles
+Following the same and keeping the existing provided code in the lecture */
 
+/* Responsive Bouncing Patterned Circles
+  - Uses two pattern variants: Pacita (CircledesignedbyCora) and Yin (CirclefromYin)
+  - Each cirlce bounces within the window and displays its pattern
+  - Color palettes and patterns are adapted from the code made by team members
+*/
 
 let circlepattern = []; // Array to hold all our cirles
 let isPaused = false;      // Whether animation is paused
@@ -43,6 +51,8 @@ function setup() {
 // Modified: i removed the for loop that creates the initial circles because now circles are created interactively by clicking on the canvas
 
 
+/*used the code from the lecture material of Week 9 for the responisve design 
+which repositions the cirlce patterns if they go out of frame after resizing*/
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
    // Lfor loop for repositioning the circles if they are out of frame after resizing
