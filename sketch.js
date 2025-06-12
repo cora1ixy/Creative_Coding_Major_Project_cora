@@ -1,18 +1,11 @@
-/* Started with referring to the Week 9 Lecture of 
-responsive design example for the animation of the circles
-Following the same and keeping the existing provided code in the lecture */
 
-/* Responsive Bouncing Patterned Circles
-  - Uses two pattern variants: Pacita (CircledesignedbyCora) and Yin (CirclefromYin)
-  - Each cirlce bounces within the window and displays its pattern
-  - Color palettes and patterns are adapted from the code made by team members
-*/
 
 let circlepattern = []; // Array to hold all our cirles
 let isPaused = false;      // Whether animation is paused
 let speedMultiplier = 1;   // Multiplier to control speed
-//***modified: i added the speedMultiplier variable to control the speed of the animation based on user input
-//***modified: i also added the isPaused variable to control the pause and resume functionality of the animation
+//modified: i added mouse attraction logic to all move() functions of different pattern types
+// the speedMultiplier variable to control the speed of the animation based on user input
+//the isPaused variable is to control the pause and resume functionality of the animation
 
 
 // Color palette for Cora's circles
@@ -23,37 +16,33 @@ const fullPalette = [
   "#FF3D00", "#FF4081", "#004D61", "#A67C52", "#E1BEE7", "#103A44"
 ];
 
-const numberofcircle = 64;
+// const numberofcircle = 64;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+// for (let i = 0; i < numberofcircle; i++) {
+  //   let paletteStart = floor(random(0, fullPalette.length - 6));     
+  //   let palette = fullPalette.slice(paletteStart, paletteStart + 6);
+  //   let x = random(width/4, 3*width/4);
+  //   let y = random(height/4, 3*height/4);
+  //   let r = random(48, 64); 
 
-    // for loop to create 64 circlepattern, randomly assigning each a pattern type
-  for (let i = 0; i < numberofcircle; i++) {
-    // Selecting a random starting palette, ensuring at least 6 colors are available
-    let paletteStart = floor(random(0, fullPalette.length - 6));     
-    let palette = fullPalette.slice(paletteStart, paletteStart + 6);
-     // Randomly positioning the circle within the central half of the window
-    let x = random(width/4, 3*width/4);
-    let y = random(height/4, 3*height/4);
-        // Randomly assign a radius between 60 and 120 for the circle
-    let r = random(48, 64); // Increased size here from team feedback session
+  //   let rand = random(); 
+  //   if (rand < 0.25) {
+  //     circlepattern.push(new criclepattern(x, y, r, palette));
+  //   } else if (rand < 0.5) {
+  //     circlepattern.push(new YinPatterncriclepattern(x, y, r));
+  //   } else if (rand < 0.75) {
+  //     circlepattern.push(new KristienPattern1criclepattern(x, y, r));
+  //   } else {
+  //     circlepattern.push(new KristienPattern2criclepattern(x, y, r));
+  //   }
+  // }
 
-    let rand = random();    // Randomly choose pattern type for the circle
-    if (rand < 0.25) {
-     circlepattern.push(new criclepattern(x, y, r, palette)); // Cora's artwork pattern
-    } else if (rand < 0.5) {
-     circlepattern.push(new YinPatterncriclepattern(x, y, r)); // Yin's artwork pattern
-    } else if (rand < 0.75) {
-     circlepattern.push(new KristienPattern1criclepattern(x, y, r)); // Kristien's circle pattern 1
-    } else {
-     circlepattern.push(new KristienPattern2criclepattern(x, y, r)); // Kristien's circle pattern 2
-    }
-  }
 }
+// Modified: i removed the for loop that creates the initial circles because now circles are created interactively by clicking on the canvas
 
-/*used the code from the lecture material of Week 9 for the responisve design 
-which repositions the cirlce patterns if they go out of frame after resizing*/
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
    // Lfor loop for repositioning the circles if they are out of frame after resizing
@@ -603,9 +592,16 @@ function keyPressed() {
     speedMultiplier *= 1.2; // Increase speed
   } else if (keyCode === DOWN_ARROW) {
     speedMultiplier *= 0.8; // Decrease speed
+  } else if (key === 'c' || key === 'C') {
+    circlepattern = []; // Clear all circles
   }
 }
 // ***Modified: i added the keyPressed function to allow users to control the speed of the animation
 // Pressing UP_ARROW increases speed, DOWN_ARROW decreases speed, and SPACE toggles pause/resume
 // This allows for interactive control over the animation speed and pause functionality
+// Pressing 'c' or 'C' clears all circles from the canvas
+// This allows users to reset the canvas and start fresh with new circles
+
+
+
 
