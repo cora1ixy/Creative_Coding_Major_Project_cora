@@ -26,6 +26,7 @@ The animation is entirely **interaction-based**:
 Inspired by:
 - **[Complexity Explorables](https://www.complexity-explorables.org)** – a collection of interactive visual essays that explore complex systems through code.
 - **Generative art** on [openprocessing.org](https://www.openprocessing.org/) – especially those involving mouse-trail and bounce effects.
+
 These references inspired my decision to let the mouse guide the scene composition and movement.
 
 ### Technical Overview
