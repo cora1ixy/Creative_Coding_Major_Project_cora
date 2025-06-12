@@ -9,6 +9,11 @@ Following the same and keeping the existing provided code in the lecture */
 */
 
 let circlepattern = []; // Array to hold all our cirles
+let isPaused = false;      // Whether animation is paused
+let speedMultiplier = 1;   // Multiplier to control speed
+//***modified: i added the speedMultiplier variable to control the speed of the animation based on user input
+//***modified: i also added the isPaused variable to control the pause and resume functionality of the animation
+
 
 // Color palette for Cora's circles
 const fullPalette = [
@@ -63,13 +68,25 @@ function windowResized() {
   }
 }
 
+//function draw() {
+  //background(0);
+  //for (let criclepattern of circlepattern) {
+  //  criclepattern.move();
+  //  criclepattern.display();
+  //}
+//}
+
 function draw() {
   background(0);
-  for (let criclepattern of circlepattern) {
-    criclepattern.move();
-    criclepattern.display();
+  for (let c of circlepattern) {
+    if (!isPaused) {
+      c.move();  // Only move when not paused
+    }
+    c.display();
   }
 }
+// ***modified: i changed the Draw Function to toggle pause/resume on mouse click
+
 
 // Class for the patterned circles(Cora's pattern)
 class PatternedCircle {
@@ -146,22 +163,36 @@ class criclepattern {
     );
   }
 
+  //***Modified: i added mouse attraction logic to all four move() functions of different pattern types 
+  // it allows the circle move towards the mouse if within a certain distance
+  // Otherwise, it will move with its own speed
   move() {
-    // Updatig the position of circle with the speed
-    this.criclepatternXPos += this.criclepatternXSpeed;
-    this.criclepatternYPos += this.criclepatternYSpeed;
-
-    // Bounce off left/right edges
-    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
-      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternXSpeed *= -1;
-    }
-      // Bounce off top/bottom edges
-    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
-      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternYSpeed *= -1;
-    }
+    
+  // Calculate distance vector to mouse position
+  let dx = mouseX - this.criclepatternXPos;
+  let dy = mouseY - this.criclepatternYPos;
+  let distance = dist(mouseX, mouseY, this.criclepatternXPos, this.criclepatternYPos);
+  // If within 150 pixels of mouse, move slightly toward it
+  if (distance < 150) {
+    this.criclepatternXPos += dx * 0.01;
+    this.criclepatternYPos += dy * 0.01;
+  } else {
+    // Otherwise, move normally using velocity
+    this.criclepatternXPos += this.criclepatternXSpeed * speedMultiplier;
+    this.criclepatternYPos += this.criclepatternYSpeed * speedMultiplier;
+    //***Modified: i added the speedMultiplier to control the speed of the animation based on user input
+    
   }
+  // Bounce off window edges
+  if (this.criclepatternXPos + this.criclepatternRadius / 2 > width ||
+      this.criclepatternXPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternXSpeed *= -1;
+  }
+  if (this.criclepatternYPos + this.criclepatternRadius / 2 > height ||
+      this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternYSpeed *= -1;
+  }
+}
 
   display() {
     // Update the PatternedCircle's position before drawing
@@ -184,21 +215,28 @@ class YinPatterncriclepattern {
   }
 
   move() {
-    // Update the position of the circles by speed
-    this.criclepatternXPos += this.criclepatternXSpeed;
-    this.criclepatternYPos += this.criclepatternYSpeed;
+  let dx = mouseX - this.criclepatternXPos;
+  let dy = mouseY - this.criclepatternYPos;
+  let distance = dist(mouseX, mouseY, this.criclepatternXPos, this.criclepatternYPos);
 
-   // Bounce off left/right edges
-    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
-      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternXSpeed *= -1;
-    }
-    // Bounce off top/bottom edges
-    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
-      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternYSpeed *= -1;
-    }
+  if (distance < 150) {
+    this.criclepatternXPos += dx * 0.01;
+    this.criclepatternYPos += dy * 0.01;
+  } else {
+    this.criclepatternXPos += this.criclepatternXSpeed * speedMultiplier;
+    this.criclepatternYPos += this.criclepatternYSpeed * speedMultiplier;
+
   }
+
+  if (this.criclepatternXPos + this.criclepatternRadius / 2 > width ||
+      this.criclepatternXPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternXSpeed *= -1;
+  }
+  if (this.criclepatternYPos + this.criclepatternRadius / 2 > height ||
+      this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternYSpeed *= -1;
+  }
+}
 
   display() {
     drawCircleYin1(this.criclepatternXPos, this.criclepatternYPos, this.criclepatternRadius);
@@ -319,23 +357,28 @@ class KristienPattern1criclepattern {
   }
 
   move() {
-    // Updating position by speed
-    this.criclepatternXPos += this.criclepatternXSpeed;
-    this.criclepatternYPos += this.criclepatternYSpeed;
-    
-    // Bounce off left/right edges
-    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
-      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternXSpeed *= -1;
-    }
+  let dx = mouseX - this.criclepatternXPos;
+  let dy = mouseY - this.criclepatternYPos;
+  let distance = dist(mouseX, mouseY, this.criclepatternXPos, this.criclepatternYPos);
 
-    // Bounce off top/bottom edges
-    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
-      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternYSpeed *= -1;
-    }
+  if (distance < 150) {
+    this.criclepatternXPos += dx * 0.01;
+    this.criclepatternYPos += dy * 0.01;
+  } else {
+    this.criclepatternXPos += this.criclepatternXSpeed * speedMultiplier;
+    this.criclepatternYPos += this.criclepatternYSpeed * speedMultiplier;
+  
   }
 
+  if (this.criclepatternXPos + this.criclepatternRadius / 2 > width ||
+      this.criclepatternXPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternXSpeed *= -1;
+  }
+  if (this.criclepatternYPos + this.criclepatternRadius / 2 > height ||
+      this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternYSpeed *= -1;
+  }
+}
   display() {
     // Draws Kristien's first circle pattern
     drawCircleKristien1(this.criclepatternXPos, this.criclepatternYPos, this.criclepatternRadius);
@@ -353,21 +396,28 @@ class KristienPattern2criclepattern {
   }
 
   move() {
-    // Update position by speed
-    this.criclepatternXPos += this.criclepatternXSpeed;
-    this.criclepatternYPos += this.criclepatternYSpeed;
+  let dx = mouseX - this.criclepatternXPos;
+  let dy = mouseY - this.criclepatternYPos;
+  let distance = dist(mouseX, mouseY, this.criclepatternXPos, this.criclepatternYPos);
 
-    // Bounce off left/right edges
-    if (this.criclepatternXPos + this.criclepatternXSpeed + this.criclepatternRadius / 2 > width 
-      || this.criclepatternXPos + this.criclepatternXSpeed - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternXSpeed *= -1;
-    }
-    // Bounce off top/bottom edges
-    if (this.criclepatternYPos + this.criclepatternRadius / 2 > height 
-      || this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
-      this.criclepatternYSpeed *= -1;
-    }
+  if (distance < 150) {
+    this.criclepatternXPos += dx * 0.01;
+    this.criclepatternYPos += dy * 0.01;
+  } else {
+    this.criclepatternXPos += this.criclepatternXSpeed * speedMultiplier;
+    this.criclepatternYPos += this.criclepatternYSpeed * speedMultiplier;
   }
+
+  if (this.criclepatternXPos + this.criclepatternRadius / 2 > width ||
+      this.criclepatternXPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternXSpeed *= -1;
+  }
+  if (this.criclepatternYPos + this.criclepatternRadius / 2 > height ||
+      this.criclepatternYPos - this.criclepatternRadius / 2 < 0) {
+    this.criclepatternYSpeed *= -1;
+  }
+}
+
 
   display() {
     // Draws Kristien's 2nd circle pattern
@@ -524,3 +574,38 @@ function drawMultiColorEyecriclepattern(cx, cy, maxRadius) {
     circle(cx, cy, r);
   }
 }
+
+//***Modified: i also added the mousePressed function to allow users to create new circles by clicking anywhere on the canvas
+// This function is called whenever the mouse is pressed
+// It randomly selects a pattern type and creates a new circle at the mouse position with a random radius and color palette
+// The new circle is added to the circlepattern array, allowing it to be displayed and animated in the draw loop
+function mousePressed() {
+  let paletteStart = floor(random(0, fullPalette.length - 6));     
+  let palette = fullPalette.slice(paletteStart, paletteStart + 6);
+  let r = random(48, 64); 
+
+  let rand = random();
+  if (rand < 0.25) {
+    circlepattern.push(new criclepattern(mouseX, mouseY, r, palette));
+  } else if (rand < 0.5) {
+    circlepattern.push(new YinPatterncriclepattern(mouseX, mouseY, r));
+  } else if (rand < 0.75) {
+    circlepattern.push(new KristienPattern1criclepattern(mouseX, mouseY, r));
+  } else {
+    circlepattern.push(new KristienPattern2criclepattern(mouseX, mouseY, r));
+  }
+}
+
+function keyPressed() {
+  if (key === ' ') {
+    isPaused = !isPaused; // Toggle pause
+  } else if (keyCode === UP_ARROW) {
+    speedMultiplier *= 1.2; // Increase speed
+  } else if (keyCode === DOWN_ARROW) {
+    speedMultiplier *= 0.8; // Decrease speed
+  }
+}
+// ***Modified: i added the keyPressed function to allow users to control the speed of the animation
+// Pressing UP_ARROW increases speed, DOWN_ARROW decreases speed, and SPACE toggles pause/resume
+// This allows for interactive control over the animation speed and pause functionality
+
